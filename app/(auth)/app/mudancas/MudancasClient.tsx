@@ -76,8 +76,8 @@ export function MudancasClient({ mudancas: initial, canCreate, plan }: Props) {
           <p className="text-muted-foreground mt-1">{mudancas.length} mudança{mudancas.length !== 1 ? "s" : ""} criada{mudancas.length !== 1 ? "s" : ""}</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-primary hover:bg-primary/90" disabled={!canCreate}>
+          <DialogTrigger>
+            <Button className="bg-primary hover:bg-primary/90" disabled={!canCreate} onClick={() => setOpen(true)}>
               <Plus className="mr-2 h-4 w-4" /> Nova mudança
             </Button>
           </DialogTrigger>

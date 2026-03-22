@@ -3,17 +3,21 @@ import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 
+// Helper: get period end from subscription (Stripe v20 removed current_period_end)
+function getPeriodEnd(subscription: Stripe.Subscription): Date {
+  const raw = (subscription as any).current_period_end;
+  if (raw) return new Date(raw * 1000);
+  // fallback: 30 days from now
+  return new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const sig = req.headers.get("stripe-signature")!;
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -36,9 +40,7 @@ export async function POST(req: NextRequest) {
             stripeCustomerId: session.customer as string,
             stripeSubscriptionId: subscription.id,
             stripePriceId: subscription.items.data[0].price.id,
-            stripeCurrentPeriodEnd: new Date(
-              subscription.current_period_end * 1000
-            ),
+            stripeCurrentPeriodEnd: getPeriodEnd(subscription),
           },
         });
         break;
@@ -54,12 +56,7 @@ export async function POST(req: NextRequest) {
         const subscription = await stripe.subscriptions.retrieve(subId);
         await db.user.update({
           where: { stripeSubscriptionId: subId },
-          data: {
-            plan: "PRO",
-            stripeCurrentPeriodEnd: new Date(
-              subscription.current_period_end * 1000
-            ),
-          },
+          data: { plan: "PRO", stripeCurrentPeriodEnd: getPeriodEnd(subscription) },
         });
         break;
       }
@@ -70,9 +67,7 @@ export async function POST(req: NextRequest) {
           where: { stripeSubscriptionId: subscription.id },
           data: {
             stripePriceId: subscription.items.data[0].price.id,
-            stripeCurrentPeriodEnd: new Date(
-              subscription.current_period_end * 1000
-            ),
+            stripeCurrentPeriodEnd: getPeriodEnd(subscription),
           },
         });
         break;
@@ -82,12 +77,7 @@ export async function POST(req: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription;
         await db.user.update({
           where: { stripeSubscriptionId: subscription.id },
-          data: {
-            plan: "FREE",
-            stripeSubscriptionId: null,
-            stripePriceId: null,
-            stripeCurrentPeriodEnd: null,
-          },
+          data: { plan: "FREE", stripeSubscriptionId: null, stripePriceId: null, stripeCurrentPeriodEnd: null },
         });
         break;
       }
