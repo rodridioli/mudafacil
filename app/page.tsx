@@ -1,65 +1,143 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Truck, Package, Star, ChevronRight, CheckCircle, Zap, Shield } from "lucide-react";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-[#F8FAFC]">
+      {/* Nav */}
+      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-xl text-primary">
+            🚚 <span>MudaFácil</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href="/login">
+              <Button variant="ghost">Entrar</Button>
+            </Link>
+            <Link href="/login">
+              <Button className="bg-primary hover:bg-primary/90">Começar grátis</Button>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </nav>
+
+      {/* Hero */}
+      <section className="max-w-6xl mx-auto px-4 py-24 text-center">
+        <Badge className="mb-6 bg-accent/10 text-accent border-accent/20 hover:bg-accent/20">
+          ✨ 14 dias grátis — sem cartão
+        </Badge>
+        <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight mb-6">
+          Arraste seus móveis,<br />
+          <span className="text-primary">escolha o caminhão</span><br />
+          e mude sem estresse
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+          Monte visualmente a carga da sua mudança com drag & drop, compare tamanhos de caminhão em tempo real e receba cotações instantâneas de transportadoras avaliadas.
+        </p>
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Link href="/login">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 h-14">
+              Planejar minha mudança <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+          <Link href="#features">
+            <Button size="lg" variant="outline" className="text-lg px-8 h-14">
+              Ver como funciona
+            </Button>
+          </Link>
         </div>
-      </main>
+        <p className="mt-4 text-sm text-muted-foreground">14 dias grátis · Sem cartão de crédito · Cancele quando quiser</p>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="bg-white py-24">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-4">Tudo que você precisa para uma mudança tranquila</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Do planejamento à contratação, em minutos.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { icon: "🖱️", title: "Canvas interativo drag & drop", desc: "Arraste ícones de móveis para dentro do container virtual. Cada item tem dimensão proporcional real." },
+              { icon: "🚛", title: "Comparador de caminhões", desc: "Compare Fiorino, HR, 3/4 e Baú com barra de ocupação em tempo real conforme você adiciona itens." },
+              { icon: "💰", title: "Cotações instantâneas", desc: "Filtre transportadoras por preço, nota, data, seguro e tipo de veículo. Compare lado a lado." },
+              { icon: "📦", title: "Catálogo com 40+ itens", desc: "Biblioteca categorizada com quarto, cozinha, sala, escritório e caixas com peso e volume pré-estimados." },
+              { icon: "📊", title: "Resumo inteligente", desc: "Painel com volume total (m³), peso estimado, % de ocupação e alerta se estiver acima da capacidade." },
+              { icon: "⭐", title: "Transportadoras avaliadas", desc: "Escolha com confiança: veja nota média, total de avaliações e histórico antes de contratar." },
+            ].map((f) => (
+              <Card key={f.title} className="border-0 shadow-sm hover:shadow-md transition-shadow">
+                <CardContent className="p-6">
+                  <div className="text-4xl mb-4">{f.icon}</div>
+                  <h3 className="font-semibold text-lg mb-2">{f.title}</h3>
+                  <p className="text-muted-foreground text-sm">{f.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-24 bg-[#F8FAFC]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-4">Preço simples e justo</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Comece grátis, faça upgrade quando precisar.</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-2 border-border">
+              <CardContent className="p-8">
+                <div className="text-sm font-medium text-muted-foreground mb-2">GRÁTIS</div>
+                <div className="text-4xl font-bold mb-1">R$ 0</div>
+                <p className="text-muted-foreground mb-6">Para experimentar</p>
+                <ul className="space-y-3 mb-8">
+                  {["1 mudança ativa", "Até 15 itens no canvas", "3 cotações por mudança", "Catálogo básico"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login">
+                  <Button variant="outline" className="w-full">Começar grátis</Button>
+                </Link>
+              </CardContent>
+            </Card>
+            <Card className="border-2 border-primary relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <Badge className="bg-accent text-accent-foreground">Popular</Badge>
+              </div>
+              <CardContent className="p-8">
+                <div className="text-sm font-medium text-primary mb-2">PRO</div>
+                <div className="text-4xl font-bold mb-1">R$ 29,90<span className="text-lg font-normal text-muted-foreground">/mês</span></div>
+                <p className="text-muted-foreground mb-6">14 dias grátis para testar</p>
+                <ul className="space-y-3 mb-8">
+                  {["Mudanças ilimitadas", "Itens ilimitados no canvas", "Cotações ilimitadas", "Filtros avançados", "Suporte prioritário"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="h-4 w-4 text-primary" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login">
+                  <Button className="w-full bg-primary hover:bg-primary/90">Começar trial grátis</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white border-t py-10">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="font-bold text-lg text-primary">🚚 MudaFácil</div>
+          <p className="text-sm text-muted-foreground">© 2025 MudaFácil. Todos os direitos reservados.</p>
+          <div className="flex gap-4 text-sm text-muted-foreground">
+            <a href="#" className="hover:text-foreground">Privacidade</a>
+            <a href="#" className="hover:text-foreground">Termos</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

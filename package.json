@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "tokens": "tsx design-system/generate-css.ts",
+    "tokens:check": "tsx design-system/generate-css.ts --check",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -14,7 +19,7 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@prisma/client": "^7.5.0",
+    "@prisma/client": "^6.19.2",
     "@stripe/stripe-js": "^8.11.0",
     "@tanstack/react-query": "^5.94.5",
     "@tanstack/react-query-devtools": "^5.94.5",
@@ -23,7 +28,7 @@
     "lucide-react": "^0.577.0",
     "next": "16.2.1",
     "next-auth": "^5.0.0-beta.30",
-    "prisma": "^7.5.0",
+    "prisma": "^6.19.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "resend": "^6.9.4",
